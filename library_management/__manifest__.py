@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Library Management System',
+    'name': 'Library Management ERP odoo - Risheev',
     'version': '19.0.1.0.0',
     'category': 'Service/Library',
     'price':'10.0',
