@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Library Management System — Odoo 19</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a2e;
+    --ink-soft: #3d3d5c;
+    --ink-muted: #7b7b9a;
+    --paper: #faf9f7;
+    --paper-warm: #f5f2ed;
+    --paper-card: #ffffff;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --gold-pale: #fdf8ee;
+    --teal: #1a7a6e;
+    --teal-light: #e8f5f3;
+    --teal-pale: #f0faf9;
+    --accent: #8b3a52;
+    --accent-light: #f5e8ec;
+    --border: #e8e4dc;
+    --shadow-card: 0 2px 20px rgba(26,26,46,0.08);
+    --shadow-hover: 0 8px 40px rgba(26,26,46,0.14);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .hero-orb-1 {
+    width: 500px; height: 500px;
+    background: rgba(26,122,110,0.25);
+    top: -100px; right: -100px;
+  }
+  .hero-orb-2 {
+    width: 350px; height: 350px;
+    background: rgba(201,168,76,0.15);
+    bottom: -80px; left: 100px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .hero-title span {
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover { background: #d4b05a; transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+
+  /* Hero mock UI */
+  .hero-visual {
+    position: relative;
+  }
+
+  .mock-window {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.4);
+  }
+
+  .mock-bar {
+    background: #f0f0f0;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .mock-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+
+  .mock-url {
+    flex: 1;
+    background: #fff;
+    border-radius: 6px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 11px;
+    color: #666;
+    margin: 0 8px;
+  }
+
+  .mock-body {
+    display: flex;
+    height: 320px;
+  }
+
+  .mock-sidebar {
+    width: 56px;
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    gap: 16px;
+  }
+
+  .mock-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .mock-icon.active { background: var(--gold); color: var(--ink); }
+  .mock-icon:not(.active) { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+
+  .mock-main {
+    flex: 1;
+    background: #f8f9fa;
+    padding: 16px;
+    overflow: hidden;
+  }
+
+  .mock-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .mock-title-sm {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .mock-btn-sm {
+    background: #1a7a6e;
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .mock-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .mock-stat {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #e8e8e8;
+  }
+
+  .mock-stat-num {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .mock-stat-label {
+    font-size: 9px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mock-stat-num.green { color: #1a7a6e; }
+  .mock-stat-num.gold { color: #c9a84c; }
+  .mock-stat-num.red { color: #c0392b; }
+
+  .mock-table-header {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr 1fr 80px;
+    gap: 8px;
+    padding: 6px 8px;
+    background: #fff;
+    border-radius: 6px 6px 0 0;
+    border: 1px solid #e8e8e8;
+    border-bottom: none;
+  }
+
+  .mock-col-head {
+    font-size: 9px;
+    font-weight: 600;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mock-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr 1fr 80px;
+    gap: 8px;
+    padding: 7px 8px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-top: none;
+    align-items: center;
+  }
+
+  .mock-row:last-child { border-radius: 0 0 6px 6px; }
+
+  .mock-cell {
+    font-size: 10px;
+    color: #444;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mock-badge {
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+  .badge-available { background: #e8f5f3; color: #1a7a6e; }
+  .badge-issued { background: #fff3e0; color: #e65100; }
+  .badge-overdue { background: #fdecea; color: #c0392b; }
+
+  /* ── STATS BAND ── */
+  .stats-band {
+    background: var(--gold);
+    padding: 32px 40px;
+  }
+
+  .stats-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 0 20px;
+    border-right: 1px solid rgba(26,26,46,0.15);
+  }
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: rgba(26,26,46,0.65);
+    font-weight: 500;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 80px 40px; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--teal);
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 580px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* ── FEATURES ── */
+  .features-bg { background: var(--paper-warm); }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .feature-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--teal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .feature-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+    border-color: transparent;
+  }
+
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .icon-teal { background: var(--teal-light); color: var(--teal); }
+  .icon-gold { background: var(--gold-pale); color: #9a7530; }
+  .icon-accent { background: var(--accent-light); color: var(--accent); }
+  .icon-blue { background: #e8f0fe; color: #2c5fa8; }
+  .icon-green { background: #e8f5e9; color: #2e7d32; }
+  .icon-purple { background: #f3e8fd; color: #6a1b9a; }
+
+  .feature-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .feature-desc {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.65;
+  }
+
+  /* ── MODELS SECTION ── */
+  .models-section { background: var(--paper); }
+
+  .models-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .model-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s;
+  }
+  .model-card:hover { box-shadow: var(--shadow-card); }
+
+  .model-card-header {
+    padding: 14px 18px;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .model-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'DM Sans', monospace;
+  }
+
+  .model-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .model-fields {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .model-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 13px;
+  }
+  .model-field:last-child { border-bottom: none; }
+
+  .field-name { color: var(--ink); font-weight: 500; }
+  .field-type {
+    font-size: 11px;
+    background: #f0f0f0;
+    color: #666;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+  .field-type.rel { background: var(--teal-light); color: var(--teal); }
+  .field-type.comp { background: var(--gold-pale); color: #9a7530; }
+
+  /* ── SCREENSHOTS SECTION ── */
+  .screenshots-bg { background: var(--paper-warm); }
+
+  .screens-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .screen-tab {
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--paper-card);
+    color: var(--ink-muted);
+    transition: all 0.2s;
+  }
+
+  .screen-tab.active, .screen-tab:hover {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  .screen-preview {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+
+  .preview-topbar {
+    background: #1a1a2e;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .topbar-dots { display: flex; gap: 6px; }
+  .topbar-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .preview-url {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 12px;
+  }
+
+  .preview-inner {
+    display: none;
+    padding: 28px;
+    min-height: 380px;
+    background: #f8f9fa;
+  }
+
+  .preview-inner.active { display: block; }
+
+  /* Book List Preview */
+  .preview-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .preview-h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .preview-btn {
+    background: var(--teal);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .preview-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .filter-chip {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .filter-chip.on { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+  .preview-table { width: 100%; border-collapse: collapse; }
+  .preview-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #999;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+  }
+  .preview-table td {
+    padding: 11px 12px;
+    font-size: 13px;
+    color: #444;
+    border-bottom: 1px solid #f5f5f5;
+    background: #fff;
+  }
+
+  .preview-table tr:hover td { background: #f9f9f9; }
+
+  .status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* ── ACCESS CONTROL ── */
+  .access-section { background: var(--ink); color: #fff; }
+
+  .access-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .access-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 28px 22px;
+  }
+
+  .access-role {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .access-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .access-perms {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .perm-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .perm-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .perm-yes { background: rgba(26,122,110,0.3); color: #4ecdc4; }
+  .perm-no { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); }
+
+  /* ── TECH STACK ── */
+  .tech-section { background: var(--paper-warm); }
+
+  .tech-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .tech-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .tech-bullet {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--teal-light);
+    color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .tech-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .tech-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.55; }
+
+  /* ── PRICING / CTA ── */
+  .cta-section { background: var(--paper); }
+
+  .cta-box {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+    border-radius: 20px;
+    padding: 60px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .cta-inner { position: relative; z-index: 1; }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .cta-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 36px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    padding: 32px 40px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  footer strong { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-content, .models-layout { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .access-grid { grid-template-columns: 1fr; }
+    .tech-list { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .cta-box { padding: 40px 24px; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 60px 20px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .hero-content { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <div class="hero-content">
+    <div class="fade-up">
+      <div class="hero-badge">Odoo 19 · Community &amp; Enterprise</div>
+      <h1 class="hero-title">
+        Complete <span>Library</span><br/>Management System
+      </h1>
+      <p class="hero-desc">
+        A production-ready Odoo module built for modern libraries — manage books, members, issues, fines, and access control from one elegant interface.
+      </p>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary">📦 Buy on Odoo Apps</a>
+        <a href="#features" class="btn-outline">Explore Features →</a>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-up delay-2">
+      <div class="mock-window">
+        <div class="mock-bar">
+          <div class="mock-dot dot-r"></div>
+          <div class="mock-dot dot-y"></div>
+          <div class="mock-dot dot-g"></div>
+          <div class="mock-url">localhost:8069/odoo/library/books</div>
+        </div>
+        <div class="mock-body">
+          <div class="mock-sidebar">
+            <div class="mock-icon active">📚</div>
+            <div class="mock-icon">👤</div>
+            <div class="mock-icon">📋</div>
+            <div class="mock-icon">📊</div>
+            <div class="mock-icon">⚙️</div>
+          </div>
+          <div class="mock-main">
+            <div class="mock-header-row">
+              <span class="mock-title-sm">Books Catalog</span>
+              <button class="mock-btn-sm">+ New Book</button>
+            </div>
+            <div class="mock-stats">
+              <div class="mock-stat">
+                <div class="mock-stat-num green">1,247</div>
+                <div class="mock-stat-label">Total Books</div>
+              </div>
+              <div class="mock-stat">
+                <div class="mock-stat-num gold">89</div>
+                <div class="mock-stat-label">Issued</div>
+              </div>
+              <div class="mock-stat">
+                <div class="mock-stat-num red">12</div>
+                <div class="mock-stat-label">Overdue</div>
+              </div>
+            </div>
+            <div class="mock-table-header">
+              <span class="mock-col-head">Title</span>
+              <span class="mock-col-head">Author</span>
+              <span class="mock-col-head">Genre</span>
+              <span class="mock-col-head">Rack</span>
+              <span class="mock-col-head">Status</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-cell">The Great Gatsby</span>
+              <span class="mock-cell">F. Scott Fitzgerald</span>
+              <span class="mock-cell">Fiction</span>
+              <span class="mock-cell">A-12</span>
+              <span class="mock-badge badge-available">Available</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-cell">Brief History of Time</span>
+              <span class="mock-cell">Stephen Hawking</span>
+              <span class="mock-cell">Science</span>
+              <span class="mock-cell">C-04</span>
+              <span class="mock-badge badge-issued">Issued</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-cell">Clean Code</span>
+              <span class="mock-cell">Robert C. Martin</span>
+              <span class="mock-cell">Academic</span>
+              <span class="mock-cell">B-07</span>
+              <span class="mock-badge badge-overdue">Overdue</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-cell">Sapiens</span>
+              <span class="mock-cell">Yuval Noah Harari</span>
+              <span class="mock-cell">History</span>
+              <span class="mock-cell">D-02</span>
+              <span class="mock-badge badge-available">Available</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAND ═══ -->
+<div class="stats-band">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Core Data Models</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Security Roles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">View Types &amp; Reports</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">v19</div>
+      <div class="stat-label">Odoo Compatible</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="features-bg" id="features">
+  <div class="section-inner">
+    <div class="section-eyebrow">What's Included</div>
+    <h2 class="section-title">Everything your library needs</h2>
+    <p class="section-sub">From book cataloging to member management and fine collection — built natively on Odoo with zero external dependencies.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon icon-teal">📚</div>
+        <div class="feature-title">Book Catalog Management</div>
+        <div class="feature-desc">Track every book with title, author, ISBN, genre, language, rack location, cover image, synopsis, and internal notes. Auto-generated reference numbers with sequences.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-gold">👥</div>
+        <div class="feature-title">Member Profiles</div>
+        <div class="feature-desc">Complete member records with photo, contact info, membership type (student/faculty/staff), expiry tracking, and borrow limits. Auto-expiry detection.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-accent">📋</div>
+        <div class="feature-title">Issue &amp; Return Workflow</div>
+        <div class="feature-desc">Full lifecycle management from Draft → Issued → Returned. Due date tracking, overdue detection, and return processing with status badges in real time.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">💰</div>
+        <div class="feature-title">Fine Management</div>
+        <div class="feature-desc">Automatic fine calculation for overdue books. Track fine amounts, mark fines as paid, and view outstanding dues per member and per issue record.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-green">🏷️</div>
+        <div class="feature-title">Tags &amp; Rack System</div>
+        <div class="feature-desc">Color-coded tags (Bestseller, New Arrival, Award Winner) and physical rack/shelf location tracking. Filter and group books by any attribute.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-purple">🔒</div>
+        <div class="feature-title">Role-Based Access Control</div>
+        <div class="feature-desc">Three-tier security: Member (read own records), Librarian (full CRUD), Administrator (full access + user management). Record rules enforced at DB level.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-teal">📊</div>
+        <div class="feature-title">Multiple View Types</div>
+        <div class="feature-desc">List, Kanban, Form, and Search views for every model. Kanban with real-time availability badges. Search panels with sidebar filtering by rack and membership type.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-gold">💬</div>
+        <div class="feature-title">Chatter &amp; Activity Tracking</div>
+        <div class="feature-desc">Full Odoo chatter integration on books and members. Log notes, schedule activities, and track field-level changes with the mail.thread mixin.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon icon-accent">🔢</div>
+        <div class="feature-title">Smart Sequences &amp; References</div>
+        <div class="feature-desc">Auto-generated book references (LIB/BK/0001) and issue references using Odoo's ir.sequence. Computed fields for issue counts and active borrows.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MODELS ═══ -->
+<section class="models-section" id="models">
+  <div class="section-inner">
+    <div class="models-layout">
+      <div>
+        <div class="section-eyebrow">Data Architecture</div>
+        <h2 class="section-title">4 clean, well-structured models</h2>
+        <p class="section-sub" style="margin-bottom: 32px;">Built following Odoo best practices — proper relational links, computed fields, SQL constraints, and ORM overrides.</p>
+
+        <div class="model-card">
+          <div class="model-card-header">
+            <div class="model-dot"></div>
+            <span class="model-card-title">library.book</span>
+          </div>
+          <div class="model-fields">
+            <div class="model-field"><span class="field-name">name, author, isbn</span><span class="field-type">Char</span></div>
+            <div class="model-field"><span class="field-name">genre, language</span><span class="field-type">Selection</span></div>
+            <div class="model-field"><span class="field-name">rack_id</span><span class="field-type rel">Many2one</span></div>
+            <div class="model-field"><span class="field-name">tag_ids</span><span class="field-type rel">Many2many</span></div>
+            <div class="model-field"><span class="field-name">issue_ids</span><span class="field-type rel">One2many</span></div>
+            <div class="model-field"><span class="field-name">total_issue</span><span class="field-type comp">Computed</span></div>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-card-header">
+            <div class="model-dot"></div>
+            <span class="model-card-title">library.member</span>
+          </div>
+          <div class="model-fields">
+            <div class="model-field"><span class="field-name">name, email, phone</span><span class="field-type">Char</span></div>
+            <div class="model-field"><span class="field-name">membership_type</span><span class="field-type">Selection</span></div>
+            <div class="model-field"><span class="field-name">user_id</span><span class="field-type rel">Many2one</span></div>
+            <div class="model-field"><span class="field-name">issue_ids</span><span class="field-type rel">One2many</span></div>
+            <div class="model-field"><span class="field-name">is_expired, active_issue_count</span><span class="field-type comp">Computed</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="model-card" style="margin-top: 100px;">
+          <div class="model-card-header">
+            <div class="model-dot"></div>
+            <span class="model-card-title">library.issue</span>
+          </div>
+          <div class="model-fields">
+            <div class="model-field"><span class="field-name">book_id</span><span class="field-type rel">Many2one</span></div>
+            <div class="model-field"><span class="field-name">member_id</span><span class="field-type rel">Many2one</span></div>
+            <div class="model-field"><span class="field-name">issue_date, due_date, return_date</span><span class="field-type">Date</span></div>
+            <div class="model-field"><span class="field-name">state</span><span class="field-type">Selection</span></div>
+            <div class="model-field"><span class="field-name">fine_amount</span><span class="field-type comp">Computed</span></div>
+            <div class="model-field"><span class="field-name">fine_paid</span><span class="field-type">Boolean</span></div>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-card-header">
+            <div class="model-dot"></div>
+            <span class="model-card-title">library.rack</span>
+          </div>
+          <div class="model-fields">
+            <div class="model-field"><span class="field-name">name</span><span class="field-type">Char</span></div>
+            <div class="model-field"><span class="field-name">location_description</span><span class="field-type">Text</span></div>
+            <div class="model-field"><span class="field-name">book_ids</span><span class="field-type rel">One2many</span></div>
+            <div class="model-field"><span class="field-name">book_count</span><span class="field-type comp">Computed</span></div>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <div class="model-card-header">
+            <div class="model-dot"></div>
+            <span class="model-card-title">library.book.tag</span>
+          </div>
+          <div class="model-fields">
+            <div class="model-field"><span class="field-name">name</span><span class="field-type">Char</span></div>
+            <div class="model-field"><span class="field-name">color</span><span class="field-type">Integer</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCREENSHOTS ═══ -->
+<section class="screenshots-bg" id="screenshots">
+  <div class="section-inner">
+    <div class="section-eyebrow">Interface Preview</div>
+    <h2 class="section-title">See it in action</h2>
+    <p class="section-sub">Clean, native Odoo UI — no custom JS frameworks, no external dependencies. Feels like home.</p>
+
+    <div class="screens-tabs">
+      <button class="screen-tab active" onclick="showTab('books', this)">📚 Books List</button>
+      <button class="screen-tab" onclick="showTab('member', this)">👤 Member Form</button>
+      <button class="screen-tab" onclick="showTab('issue', this)">📋 Issue Tracker</button>
+    </div>
+
+    <div class="screen-preview">
+      <div class="preview-topbar">
+        <div class="topbar-dots">
+          <div class="topbar-dot" style="background:#ff5f57"></div>
+          <div class="topbar-dot" style="background:#febc2e"></div>
+          <div class="topbar-dot" style="background:#28c840"></div>
+        </div>
+        <div class="preview-url">🔒 localhost:8069/odoo/library</div>
+      </div>
+
+      <!-- Books tab -->
+      <div class="preview-inner active" id="tab-books">
+        <div class="preview-list-header">
+          <div class="preview-h1">📚 Books</div>
+          <button class="preview-btn">＋ New Book</button>
+        </div>
+        <div class="preview-filters">
+          <span class="filter-chip on">✓ Available</span>
+          <span class="filter-chip">Currently Issued</span>
+          <span class="filter-chip">Reference Only</span>
+          <span class="filter-chip">Fiction</span>
+          <span class="filter-chip">This Month</span>
+        </div>
+        <table class="preview-table">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Genre</th>
+              <th>Rack</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:#888;font-family:monospace;">LIB/BK/0001</td>
+              <td style="font-weight:600;color:#1a1a2e;">The Great Gatsby</td>
+              <td>F. Scott Fitzgerald</td>
+              <td>Fiction</td>
+              <td>A-12</td>
+              <td><span class="status-pill" style="background:#e8f5f3;color:#1a7a6e;">Available</span></td>
+            </tr>
+            <tr>
+              <td style="color:#888;font-family:monospace;">LIB/BK/0002</td>
+              <td style="font-weight:600;color:#1a1a2e;">A Brief History of Time</td>
+              <td>Stephen Hawking</td>
+              <td>Science &amp; Technology</td>
+              <td>C-04</td>
+              <td><span class="status-pill" style="background:#fff3e0;color:#e65100;">Issued</span></td>
+            </tr>
+            <tr>
+              <td style="color:#888;font-family:monospace;">LIB/BK/0003</td>
+              <td style="font-weight:600;color:#1a1a2e;">Clean Code</td>
+              <td>Robert C. Martin</td>
+              <td>Academic / Textbook</td>
+              <td>B-07</td>
+              <td><span class="status-pill" style="background:#fdecea;color:#c0392b;">Overdue</span></td>
+            </tr>
+            <tr>
+              <td style="color:#888;font-family:monospace;">LIB/BK/0004</td>
+              <td style="font-weight:600;color:#1a1a2e;">Sapiens</td>
+              <td>Yuval Noah Harari</td>
+              <td>History</td>
+              <td>D-02</td>
+              <td><span class="status-pill" style="background:#e8f5f3;color:#1a7a6e;">Available</span></td>
+            </tr>
+            <tr>
+              <td style="color:#888;font-family:monospace;">LIB/BK/0005</td>
+              <td style="font-weight:600;color:#1a1a2e;">Harry Potter and the Chamber of Secrets</td>
+              <td>J.K. Rowling</td>
+              <td>Fiction</td>
+              <td>A-03</td>
+              <td><span class="status-pill" style="background:#e8f5f3;color:#1a7a6e;">Available</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Member form tab -->
+      <div class="preview-inner" id="tab-member">
+        <div style="display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;">
+          <div style="text-align:center;">
+            <div style="width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#1a7a6e,#0f3460);display:flex;align-items:center;justify-content:center;font-size:42px;margin:0 auto 12px;">👤</div>
+            <div style="font-size:18px;font-weight:700;color:#1a1a2e;">Priya Mehta</div>
+            <div style="font-size:12px;color:#888;font-family:monospace;margin-top:4px;">LIB/MEM/0023</div>
+            <span class="status-pill" style="background:#e8f5f3;color:#1a7a6e;margin-top:8px;display:inline-block;">Active Member</span>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div>
+                <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Email</div>
+                <div style="font-size:14px;color:#1a1a2e;">priya.mehta@example.com</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Phone</div>
+                <div style="font-size:14px;color:#1a1a2e;">+91 98765 43210</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Membership Type</div>
+                <span class="status-pill" style="background:#e8f0fe;color:#2c5fa8;">Student</span>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Expires On</div>
+                <div style="font-size:14px;color:#1a1a2e;">31 Dec 2026</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Books Borrowed</div>
+                <div style="font-size:22px;font-weight:700;color:#1a7a6e;">2 / 3</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Outstanding Fine</div>
+                <div style="font-size:22px;font-weight:700;color:#c9a84c;">₹ 0.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Issue tracker tab -->
+      <div class="preview-inner" id="tab-issue">
+        <div class="preview-list-header">
+          <div class="preview-h1">📋 Issue Records</div>
+          <button class="preview-btn">＋ New Issue</button>
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:16px;">
+          <div style="background:#e8f5f3;border-radius:8px;padding:12px 20px;text-align:center;flex:1;">
+            <div style="font-size:24px;font-weight:700;color:#1a7a6e;">89</div>
+            <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;">Active Issues</div>
+          </div>
+          <div style="background:#fdecea;border-radius:8px;padding:12px 20px;text-align:center;flex:1;">
+            <div style="font-size:24px;font-weight:700;color:#c0392b;">12</div>
+            <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;">Overdue</div>
+          </div>
+          <div style="background:#fff3e0;border-radius:8px;padding:12px 20px;text-align:center;flex:1;">
+            <div style="font-size:24px;font-weight:700;color:#e65100;">₹ 840</div>
+            <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.05em;">Fines Pending</div>
+          </div>
+        </div>
+        <table class="preview-table">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Member</th>
+              <th>Book</th>
+              <th>Due Date</th>
+              <th>Fine</th>
+              <th>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:monospace;color:#888;font-size:12px;">ISS/2026/0089</td>
+              <td style="font-weight:600;">Priya Mehta</td>
+              <td>Brief History of Time</td>
+              <td>15 Jun 2026</td>
+              <td>₹ 0</td>
+              <td><span class="status-pill" style="background:#fff3e0;color:#e65100;">Issued</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;color:#888;font-size:12px;">ISS/2026/0077</td>
+              <td style="font-weight:600;">Raj Sharma</td>
+              <td>Clean Code</td>
+              <td style="color:#c0392b;font-weight:600;">20 May 2026</td>
+              <td style="color:#c0392b;font-weight:600;">₹ 140</td>
+              <td><span class="status-pill" style="background:#fdecea;color:#c0392b;">Overdue</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;color:#888;font-size:12px;">ISS/2026/0065</td>
+              <td style="font-weight:600;">Anita Patel</td>
+              <td>Sapiens</td>
+              <td>01 Jun 2026</td>
+              <td>₹ 0</td>
+              <td><span class="status-pill" style="background:#e8f5f3;color:#1a7a6e;">Returned</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ACCESS CONTROL ═══ -->
+<section class="access-section" id="security">
+  <div class="section-inner">
+    <div class="section-eyebrow" style="color:var(--gold-light);">Security Architecture</div>
+    <h2 class="section-title" style="color:#fff;">3-tier access control, out of the box</h2>
+    <p style="font-size:17px;color:rgba(255,255,255,0.55);max-width:560px;line-height:1.7;margin-bottom:0;">Row-level record rules ensure members only see their own data. Librarians manage everything. Admins own it all.</p>
+
+    <div class="access-grid">
+      <div class="access-card">
+        <div class="access-role">Role 1</div>
+        <div class="access-title">Library Member</div>
+        <div class="access-perms">
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> View own book issues</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> View own member record</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> View book catalog</div>
+          <div class="perm-row"><span class="perm-check perm-no">✗</span> Edit or create records</div>
+          <div class="perm-row"><span class="perm-check perm-no">✗</span> See other members' data</div>
+          <div class="perm-row"><span class="perm-check perm-no">✗</span> Access admin settings</div>
+        </div>
+      </div>
+
+      <div class="access-card" style="border-color:rgba(201,168,76,0.3);">
+        <div class="access-role">Role 2</div>
+        <div class="access-title">Librarian</div>
+        <div class="access-perms">
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Full book CRUD</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Manage all members</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Create &amp; process issues</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Mark fines as paid</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> View all records</div>
+          <div class="perm-row"><span class="perm-check perm-no">✗</span> Manage user accounts</div>
+        </div>
+      </div>
+
+      <div class="access-card" style="border-color:rgba(26,122,110,0.4);">
+        <div class="access-role">Role 3</div>
+        <div class="access-title">Library Admin</div>
+        <div class="access-perms">
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> All librarian permissions</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Link members to users</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Configure rack locations</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Manage tags &amp; categories</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Delete any record</div>
+          <div class="perm-row"><span class="perm-check perm-yes">✓</span> Full system access</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECH HIGHLIGHTS ═══ -->
+<section class="tech-section" id="technical">
+  <div class="section-inner">
+    <div class="section-eyebrow">Technical Highlights</div>
+    <h2 class="section-title">Built the right way</h2>
+    <p class="section-sub">No hacks, no workarounds — clean Odoo 19 patterns from top to bottom.</p>
+
+    <div class="tech-list">
+      <div class="tech-item">
+        <div class="tech-bullet">🔗</div>
+        <div>
+          <div class="tech-name">Proper ORM Relationships</div>
+          <div class="tech-desc">Many2one, Many2many, One2many links between all models. Cascade delete rules and ondelete handling configured correctly.</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-bullet">⚡</div>
+        <div>
+          <div class="tech-name">Computed Fields with store=True</div>
+          <div class="tech-desc">issue count, active_issue_count, is_expired, fine_amount all use @api.depends for efficient recomputation and DB-indexed storage.</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-bullet">🛡️</div>
+        <div>
+          <div class="tech-name">models.Constraint (Odoo 19)</div>
+          <div class="tech-desc">ISBN uniqueness enforced at the database level using the new Odoo 19 models.Constraint syntax — not the deprecated _sql_constraints.</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-bullet">📜</div>
+        <div>
+          <div class="tech-name">ir.sequence Integration</div>
+          <div class="tech-desc">Book references and issue numbers auto-generated using Odoo's native sequence system. Customizable prefix and padding via Settings.</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-bullet">✉️</div>
+        <div>
+          <div class="tech-name">mail.thread + mail.activity.mixin</div>
+          <div class="tech-desc">Full chatter, message logging, and activity scheduling on Book and Member models. Field-level tracking for key fields like availability and status.</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-bullet">🎨</div>
+        <div>
+          <div class="tech-name">OWL-Compatible Views</div>
+          <div class="tech-desc">All views built with Odoo 19's OWL-ready architecture. Kanban uses t-name="card" templates. Search views follow the new no-group-wrapper pattern.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="section-inner">
+    <div class="cta-box">
+      <div class="cta-inner">
+        <div style="font-size:48px;margin-bottom:16px;">📚</div>
+        <h2 class="cta-title">Ready to modernize your library?</h2>
+        <p class="cta-sub">One-click install on Odoo 19. No setup scripts, no extra config — just install and start cataloging.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn-primary" style="font-size:16px;padding:16px 36px;">Get Library Management System</a>
+          <a href="#features" class="btn-outline" style="font-size:16px;padding:16px 36px;">View Full Features</a>
+        </div>
+        <p style="color:rgba(255,255,255,0.35);font-size:13px;margin-top:24px;">Compatible with Odoo 19 Community &amp; Enterprise · No external dependencies</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p><strong>Library Management System</strong> for Odoo 19 &nbsp;·&nbsp; Built with ❤️ by Shyam Dave &nbsp;·&nbsp; Available on the Odoo App Store</p>
+  <p style="margin-top:8px;">© 2026 · All rights reserved</p>
+</footer>
+
+<script>
+  function showTab(name, btn) {
+    document.querySelectorAll('.preview-inner').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.screen-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .model-card, .access-card, .tech-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

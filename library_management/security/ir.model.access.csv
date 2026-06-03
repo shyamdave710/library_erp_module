@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_book_admin,book.admin,model_library_book,library_management.group_library_admin,1,1,1,1
+access_member_admin,member.admin,model_library_member,library_management.group_library_admin,1,1,1,1
+access_issue_admin,issue.admin,model_library_issue,library_management.group_library_admin,1,1,1,1
+access_rack_admin,rack.admin,model_library_rack,library_management.group_library_admin,1,1,1,1
+access_tag_admin,tag.admin,model_library_book_tag,library_management.group_library_admin,1,1,1,1
+access_book_librarian,book.librarian,model_library_book,library_management.group_librarian,1,1,1,0
+access_member_librarian,member.librarian,model_library_member,library_management.group_librarian,1,1,1,0
+access_issue_librarian,issue.librarian,model_library_issue,library_management.group_librarian,1,1,1,0
+access_rack_librarian,rack.librarian,model_library_rack,library_management.group_librarian,1,0,0,0
+access_tag_librarian,tag.librarian,model_library_book_tag,library_management.group_librarian,1,0,0,0
+access_book_member,book.member,model_library_book,library_management.group_library_member,1,0,0,0
+access_member_member,member.member,model_library_member,library_management.group_library_member,1,0,0,0
+access_issue_member,issue.member,model_library_issue,library_management.group_library_member,1,0,0,0

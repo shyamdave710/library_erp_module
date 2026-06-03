@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    ROOT MENU - The app icon  on odoo home screen -->
+    <menuitem id="menu_library_root"
+              name="Library"
+              web_icon="library_management,static/description/icon.png"
+              sequence="10"/>
+
+<!--    web_icon = module_name,path/to/icon.png
+        sequence = order on home screen (lower = appears earlier)-->
+
+<!--    FIRST LEVEL - Main menu items in the top navbar -->
+    <menuitem id="menu_library_catalog"
+              name="Catalog"
+              parent="menu_library_root"
+              sequence="10"/>
+    <menuitem id="menu_library_circulation"
+              name="Circulation"
+              parent="menu_library_root"
+              sequence="20"/>
+    <menuitem id="menu_library_configuration"
+              name="Configuration"
+              parent="menu_library_root"
+              sequence="100"
+              groups="library_management.group_library_admin"/>
+
+<!--    SECOND LEVEL  CATALOG - Dropdown items under each main menu-->
+    <menuitem id="menu_library_books"
+              name="Books"
+              parent="menu_library_catalog"
+              action="action_library_book"
+              sequence="10"/>
+
+<!--    CIRCULATION submenu     -->
+    <menuitem id="menu_library_members"
+              name="Members"
+              parent="menu_library_circulation"
+              action="library_management.action_library_member"
+              sequence="10"/>
+    <menuitem id="menu_library_issues"
+              name="Book Issues"
+              parent="menu_library_circulation"
+              action="library_management.action_library_issue"
+              sequence="20"/>
+
+<!--    CONFIGURATION submenu   -->
+    <menuitem id="menu_library_racks"
+              name="Racks &amp; Shelves"
+              parent="menu_library_configuration"
+              sequence="10"/>
+    <menuitem id="menu_library_tags"
+              name="Book Tags"
+              parent="menu_library_configuration"
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+<!--        noupdate="1" means: create this record on FIRST install only.
+            if user upgrades the module later, don't  overwrite this record.
+            User noupdate="1" for sequences, demo data, initial config.
+            User noupdate="0" for views, menus - things that SHOULD update on upgrade.
+-->
+         <record id="sequence_library_book" model="ir.sequence">
+             <field name="name">Library Book Reference</field>
+             <field name="code">library.book.sequence</field>
+             <field name="prefix">LIB/BK/</field>
+             <field name="padding">4</field>
+<!--             padding=4 means the number part is 4 digits minimum
+                 Result: LIB/BK/0001, LIB/BK/0002... LIB/BK/9999
+-->
+             <field name="company_id" eval="False"/>
+<!--             eval false means this sequence works across ALl companies-->
+         </record>
+    </data>
+</odoo>

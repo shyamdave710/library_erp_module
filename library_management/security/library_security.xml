@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<!--    STEP 1: MODULE CATEGORY
+        Groups this module's groups together under one
+        category in settings -> users -> access rights
+-->
+    <record id="module_category_library" model="ir.module.category">
+        <field name="name">Library</field>
+        <field name="description">Manage library access levels</field>
+        <field name="sequence">100</field>
+    </record>
+
+<!--    STEP 2: THE THREE GROUPS    -->
+    <record id="group_library_member" model="res.groups">
+        <field name="name">Member</field>
+<!--        <field name="category_id" ref="module_category_library"/>-->
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+
+<!--        Members use portal access (base.group_portal
+            Portal users  can log in but have very restricted access
+            They see only what record rules allow them to see
+            (4, ref(..)) syntax means : ADD this existing record to the list
+            4 = link operation in odoo's Many2many command syntax
+-->
+    </record>
+
+<!--    GROUP 2 : Librarian - middle access   -->
+    <record id="group_librarian" model="res.groups">
+        <field name="name">Librarian</field>
+<!--        <field name="category_id" ref="module_category_library"/>-->
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+<!--        Librarians are internal users (base.group_user)
+            They can log into the backend odoo interface
+            They get all internal user permissions PLUS
+            whatever we define in the CSV for this group
+-->
+    </record>
+
+<!--    GROUP 3 : Library Admin - highest access    -->
+    <record id="group_library_admin" model="res.groups">
+        <field name="name">Administrator</field>
+<!--        <field name="category_id" ref="module_category_library"/>-->
+        <field name="implied_ids" eval="[(4, ref('group_librarian'))]"/>
+<!--        Admin implies Librarian
+            Librarian implies base.group_user
+            so admin automatically gets:
+                - base.group_user permissions
+                - librarian permissions
+                - PLUS full admin permission we define in csv
+-->
+    </record>
+
+<!--    STEP 3: RECORD RULES
+        Row-level security - which records each group sees
+-->
+<!--    RULE 1: members can only read their own issues records
+        without this rule, a member could see all 500 issues
+        in the library. This restricts them to only their own.
+-->
+    <record id="rule_issue_member_own" model="ir.rule">
+        <field name="name">Members: see own issues only</field>
+        <field name="model_id" ref="model_library_issue"/>
+<!--        model_id ref= uses the auto-generated XML id
+            Format: model_ + model name with dots-> underscores
+            library_issue -> model_library_issue
+-->
+        <field name="groups" eval="[(4, ref('group_library_member'))]"/>
+<!--        which group does this rule apply to ?-->
+
+        <field name="domain_force">[('member_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+<!--    RULE 2: Members can only read their own record
+        without this, a member could see all other members' details
+        (names, emails, phone numbers - privacy violation)-->
+    <record id="rule_member_own_record" model="ir.rule">
+        <field name="name">Members: see own member  record only</field>
+        <field name="model_id" ref="model_library_member"/>
+        <field name="groups" eval="[(4, ref('group_library_member'))]"/>
+        <field name="domain_force">[('user_id','=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+<!--    RULE 3: Librarians and admins see all records - no restriction
+        In odoo, id no rule exists for a group on a model,
+        that group sees all records by default
+
+        But if any rule exists for any group on a model, odoo
+        applies the "global rule" logic which can get complex
+
+        Best practice: explicitly give librarian and admins a
+        "see everything"  rule so there's no ambiguity.
+-->
+    <record  id="rule_issue_librarian_all" model="ir.rule">
+        <field name="name">Librarians: see all issues</field>
+        <field name="model_id" ref="model_library_issue"/>
+        <field name="groups" eval="[(4, ref('group_librarian'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+
+    </record>
+
+    <record id="rule_member_librarian_all" model="ir.rule">
+        <field name="name">Librarians: see all members </field>
+        <field name="model_id" ref="model_library_member"/>
+        <field name="groups" eval="[(4, ref('group_librarian'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

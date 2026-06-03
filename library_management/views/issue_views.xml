@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--    FORM VIEW - State machine buttons live here     -->
+    <record id="view_library_issue_form" model="ir.ui.view">
+        <field name="name">library.issue.form</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <form string="Book Issue">
+                <header>
+                    <!--                BUTTONS - Each one calls a python method
+                                        invisible = controls when each button shows
+                                        This is the state machine made visual       -->
+
+                    <!--                Issue Book: only shows when state is draft  -->
+                    <button name="action_issue"
+                            string="Issue Book"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"
+                            confirm="Confirm issuing this book to the member?"/>
+                    <!--                type="object" => calls a python method on the model
+                                        name="action_issue" => the method name in issue.py
+                                        confirm=shows a confirmation popup before running   -->
+
+                    <!--                Return Book: shows when issued OR overdue   -->
+                    <button name="action_return"
+                            string="Return Book"
+                            type="object"
+                            class="btn-success"
+                            invisible="state not in ('issued', 'overdue')"
+                            confirm="Confirm return of this book?"/>
+
+                    <!--                 Mark Lost : shows when issued or overdue   -->
+                    <button name="action_mark_lost"
+                            string="Mark as Lost"
+                            type="object"
+                            class="btn-danger"
+                            invisible="state not in ('issued', 'overdue')"/>
+
+                    <!--                Reset  Draft: admin correction, always visible except draft -->
+                    <button name="action_reset_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            invisible="state == 'draft'"
+                            groups="base.group_system"/>
+                    <!--                groups=base.group_system means
+                                        only administrator can see this button
+                                        Regular users never see it even if state allows-->
+
+                    <!--                STATUS BAR - Visual  process indicator  -->
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,issued,returned"/>
+                    <!--                widget"statusbar" shows states as a horizontal
+                                        progress bar at the top of the form
+                                        statusbar_visible = which states to always show
+                                        (overdue and lost are exceptional  - not in normal flow)-->
+                </header>
+
+                <sheet>
+<!--                     Fine Alert Banner      -->
+                    <div class="alert alert-danger"
+                         role="alert"
+                         invisible="fine_amount &lt;= 0 or state == 'draft'">
+                        💰 Fine Amount : <strong>
+                            <field name="fine_amount" nolabel="1"/>
+                        </strong> ₹ —
+                        <field name="fine_paid" nolabel="1"/>
+                        <span invisible="fine_paid"> ⚠️ Unpaid</span>
+                    </div>
+
+<!--                    OVERDUE BADGE      -->
+                    <div class="alert alert-warning"
+                         role="alert"
+                         invisible="state != 'overdue'">
+                        ⏰ This book is <strong>OVERDUE</strong> by
+                        <field name="days_overdue" nolabel="1"/> days!
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference"
+                                   class="oe_read_only"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Issue Details">
+                            <field name="book_id"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+<!--                            options="{'no_create':True}" removes the
+                                "create and edit" options from the dropdown
+                                User can only SELECT existing books, not create
+                                readonly="state != 'draft'" = after issuing,
+                                book cannot be changed
+-->
+                            <field name="member_id"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="issue_date"
+                                   readonly="state != 'draft'"/>
+                            <field name="due_date"
+                                   readonly="state != 'draft'"/>
+                            <field name="return_date"
+                                   invisible="state not in ('returned','lost')"/>
+                        </group>
+
+                        <group string="Fine Information">
+                            <field name="fine_per_day"/>
+                            <field name="days_overdue"
+                                   invisible="days_overdue == 0"/>
+                            <field name="fine_amount"
+                                   invisible="fine_amount == 0"/>
+                            <field name="fine_paid"
+                                   invisible="fine_amount == 0"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="notes"
+                               placeholder="Any notes about this issue...!!"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+<!--    LIST VIEW   -->
+    <record id="view_library_issue_list" model="ir.ui.view">
+        <field name="name">library.issue.list</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <list string="Book Issued"
+                  decoration-danger="state == 'overdue'"
+                  decoration-success="state == 'returned'"
+                  decoration-warning="state == 'issued'"
+                  decoration-muted="state in ('lost', 'draft')">
+
+                <field name="reference"/>
+                <field name="book_id"/>
+                <field name="member_id"/>
+                <field name="issue_date"/>
+                <field name="due_date"/>
+                <field name="return_date" optional="show"/>
+                <field name="days_overdue" optional="show"/>
+                <field name="fine_amount" optional="show"/>
+                <field name="fine_paid" widget="boolean_toggle"
+                       optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'returned'"
+                       decoration-danger="state in ('overdue','lost')"
+                       decoration-warning="state == 'issued'"
+                       decoration-info="state == 'draft'"/>
+            </list>
+        </field>
+    </record>
+
+<!--    KANBAN VIEW - Grouped by state      -->
+    <record id="view_library_issue_kanban" model="ir.ui.view">
+        <field name="name">library.issue.kanban</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+
+            <kanban default_group_by="state"
+                    class="o_kanban_small_column">
+                <field name="reference"/>
+                <field name="book_id"/>
+                <field name="member_id"/>
+                <field name="due_date"/>
+                <field name="fine_amount"/>
+                <field name="days_overdue"/>
+
+                <templates>
+                    <t t-name="card">
+                        <strong><field name="reference"/></strong>
+
+                        <div class="mt-1">
+                            <i class="fa fa-book me-1 text-primary"/>
+                            <field name="book_id"/>
+                        </div>
+
+                        <div class="text-muted small">
+                            <i class="fa fa-user me-1"/>
+                            <field name="member_id"/>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-2 small">
+                            <span>Due: <field name="due_date"/></span>
+                            <span t-if="record.fine_amount.raw_value > 0"
+                                  class="text-danger fw-bold">
+                                ₹<field name="fine_amount"/>
+                            </span>
+                        </div>
+
+                        <div t-if="record.days_overdue.raw_value > 0"
+                             class="badge bg-danger mt-1 w-100 text-center">
+                            Overdue by <field name="days_overdue"/> days
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+<!--    CALENDAR VIEW - Issue by due date   -->
+    <record id="view_library_issue_calendar" model="ir.ui.view">
+        <field name="name">library.issue.calendar</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+
+            <calendar string="Issue Calendar"
+                      date_start="issue_date"
+                      date_stop="due_date"
+                      color="state"
+                      mode="month">
+<!--                date_start = when the event STARTS on calendar
+                    date_stop = when the event ENDS on calendar
+                    color = which field controls the color
+                            each unique values gets a different color
+                    mode = default view: month/week/day
+-->
+                <field name="book_id"/>
+                <field name="member_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+<!--    SEARCH VIEW     -->
+    <record id="view_library_issue_search" model="ir.ui.view">
+        <field name="name">library.issue.search</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <search string="Search Issues">
+                <field name="reference"/>
+                <field name="book_id"/>
+                <field name="member_id"/>
+                <separator/>
+                <filter string="Currently Issued" name="filter_issued"
+                        domain="[('state','=','issued')]"/>
+                <filter string="Overdue" name="filter_overdue"
+                        domain="[('state','=','overdue')]"/>
+                <filter string="Returned" name="filter_returned"
+                        domain="[('state','=','returned')]"/>
+                <filter string="Has Unpaid Fine" name="filter_unpaid_fine"
+                        domain="[('fine_amount','>',0),('fine_paid','=',False)]"/>
+                <separator/>
+                <filter string="Group by Status" name="group_state"
+                        context="{'group_by':'state'}"/>
+                <filter string="Group by Member" name="group_member"
+                        context="{'group_by':'member_id'}"/>
+                <filter string="Group by Issue Date" name="group_date"
+                        context="{'group_by':'issue_date:month'}"/>
+            </search>
+        </field>
+    </record>
+<!--    ACTION      -->
+    <record id="action_library_issue" model="ir.actions.act_window">
+        <field name="name">Book Issues</field>
+        <field name="res_model">library.issue</field>
+        <field name="view_mode">list,kanban,calendar,form</field>
+        <field name="search_view_id" ref="view_library_issue_search"/>
+        <field name="context">{'search_default_filter_issued':1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Book issues yet. Issue a book to a member..!!
+            </p>
+        </field>
+    </record>
+</odoo>
