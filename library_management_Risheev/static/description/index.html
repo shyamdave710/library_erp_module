@@ -1,40 +1,620 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amogh AI — Natural Language Assistant for Odoo</title>
-</head>
-<body style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:16px;color:#111827;background:#ffffff;line-height:1.6;">
+<!-- Amogh AI — Natural Language Assistant for Odoo -->
+<!-- Compatible with Odoo App Store sanitizer (Bootstrap 5, hex colors, no flex inline, no gradients, no box-shadow inline) -->
 
-  <!-- HERO -->
-  <div style="background:linear-gradient(0deg,#ffffff 0%,#714b67 100%);padding:60px 40px;text-align:center;">
+<!-- ==================== HERO ==================== -->
+<section style="background-color:#714b67; padding:60px 0 40px 0;">
+  <div class="container">
 
-    <!-- Amogh Logo -->
-    <div style="margin-bottom:24px;">
-      <img src="amogh_logo.png" alt="Amogh AI" style="height:130px;width:auto;" />
+    <!-- Logo -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-12 text-center">
+        <img src="amogh_logo.png" alt="Amogh AI" style="height:110px; width:auto;" />
+      </div>
     </div>
 
-    <p style="margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#ffffff;">Natural Language Assistant for Odoo 19</p>
-
-    <h1 style="margin:0 0 20px;font-size:36px;font-weight:800;line-height:1.2;color:#111827;">
-      Ask Any Business Question.<br/>Get Real Answers from Odoo — Instantly.
-    </h1>
-
-    <p style="margin:0 auto 32px;max-width:620px;font-size:17px;color:#ffffff;line-height:1.7;">
-      Amogh AI connects any MCP-compatible AI tool directly to your live Odoo data.
-      Any employee types a plain-English question and gets the real answer —
-      secured, logged, and permission-controlled. No reports. No training. No waiting.
-    </p>
-
-    <!-- "Works with" logos -->
-    <div style="display:inline-flex;align-items:center;gap:24px;background:#ffffff;border:1px solid #E5E7EB;border-radius:12px;padding:16px 32px;margin-bottom:8px;box-shadow: #714B67FF 0px 0px 10px">
-      <span style="font-size:12px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:0.08em;">Works with</span>
-      <img src="odoo_logo.webp" alt="Odoo" style="height:36px;width:auto;" />
-      <span style="width:1px;height:32px;background:#E5E7EB;display:inline-block;"></span>
-      <img src="mcp_logo.png" alt="Model Context Protocol" style="height:36px;width:auto;" />
+    <!-- Eyebrow -->
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; margin-bottom:10px;">
+          Natural Language Assistant for Odoo 19
+        </p>
+        <h1 style="font-size:34px; font-weight:800; line-height:1.25; color:#ffffff; margin-bottom:18px;">
+          Ask Any Business Question.<br/>Get Real Answers from Odoo &mdash; Instantly.
+        </h1>
+        <p style="font-size:16px; color:#f0e8ee; line-height:1.7; max-width:620px; margin:0 auto 32px auto;">
+          Amogh AI connects any MCP-compatible AI tool directly to your live Odoo data.
+          Any employee types a plain-English question and gets the real answer &mdash;
+          secured, logged, and permission-controlled. No reports. No training. No waiting.
+        </p>
+      </div>
     </div>
 
+    <!-- Works with logos -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-auto">
+        <div class="d-inline-flex align-items-center" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:12px; padding:14px 28px;">
+          <span style="font-size:12px; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:0.08em; margin-right:16px;">Works with</span>
+          <img src="odoo_logo.webp" alt="Odoo" style="height:32px; width:auto; margin-right:16px;" />
+          <span style="width:1px; height:28px; background-color:#E5E7EB; display:inline-block; margin-right:16px;"></span>
+          <img src="mcp_logo.png" alt="Model Context Protocol" style="height:32px; width:auto;" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-10 col-12">
+        <div class="row" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden;">
+          <div class="col-md-3 col-sm-6 col-6 text-center" style="padding:22px 16px; border-right:1px solid #E5E7EB;">
+            <div style="font-size:26px; font-weight:800; color:#0057FF; line-height:1;">57</div>
+            <div style="font-size:12px; color:#6B7280; margin-top:6px;">Ready-to-Use Business Tools</div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-6 text-center" style="padding:22px 16px; border-right:1px solid #E5E7EB;">
+            <div style="font-size:26px; font-weight:800; color:#0057FF; line-height:1;">5</div>
+            <div style="font-size:12px; color:#6B7280; margin-top:6px;">Core Departments Covered</div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-6 text-center" style="padding:22px 16px; border-right:1px solid #E5E7EB;">
+            <div style="font-size:26px; font-weight:800; color:#0057FF; line-height:1;">Zero</div>
+            <div style="font-size:12px; color:#6B7280; margin-top:6px;">Technical Knowledge Required</div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-6 text-center" style="padding:22px 16px;">
+            <div style="font-size:26px; font-weight:800; color:#0057FF; line-height:1;">100%</div>
+            <div style="font-size:12px; color:#6B7280; margin-top:6px;">Your Data, Your Server</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== PROBLEM ==================== -->
+<section style="background-color:#ffffff; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">The Problem</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:12px;">Every morning, your team wastes hours getting answers that already exist in Odoo.</h2>
+        <p style="color:#4B5563; margin-bottom:36px; max-width:860px;">A sales manager needs to know which customers owe money. An operations head wants to know what stock is running low. A finance team member needs last month&apos;s profit. Each answer requires logging into Odoo, navigating menus, running reports, and waiting. The data is there &mdash; getting it out is slow and manual.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100 shadow-sm" style="border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:26px;">
+            <div style="font-size:28px; margin-bottom:12px;">&#128188;</div>
+            <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Sales Manager</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Needs overdue receivables &mdash; but must log in, navigate, run a report, and export to Excel first.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100 shadow-sm" style="border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:26px;">
+            <div style="font-size:28px; margin-bottom:12px;">&#128230;</div>
+            <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Operations Head</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Wants to check stock levels &mdash; but every answer requires a separate Odoo query and Odoo training.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100 shadow-sm" style="border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:26px;">
+            <div style="font-size:28px; margin-bottom:12px;">&#128202;</div>
+            <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Finance Team</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Needs last month&apos;s profit figure &mdash; means opening Odoo, finding the right report, and waiting for it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section style="background-color:#F8FAFF; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">The Solution</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">Just Ask. Amogh AI Fetches. You Decide.</h2>
+        <p style="color:#4B5563; margin-bottom:44px;">No Odoo login. No report knowledge. No Excel. No waiting.</p>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-4 col-12 mb-4">
+        <div style="width:52px; height:52px; border-radius:50%; background-color:#0057FF; color:#ffffff; font-size:20px; font-weight:800; line-height:52px; text-align:center; margin:0 auto 18px auto;">1</div>
+        <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Ask in Plain English</h3>
+        <p style="font-size:13px; color:#6B7280; margin:0;">Type any business question into your MCP-compatible AI tool &mdash; exactly as you&apos;d ask a colleague.</p>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div style="width:52px; height:52px; border-radius:50%; background-color:#0057FF; color:#ffffff; font-size:20px; font-weight:800; line-height:52px; text-align:center; margin:0 auto 18px auto;">2</div>
+        <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Amogh AI Validates &amp; Fetches</h3>
+        <p style="font-size:13px; color:#6B7280; margin:0;">Your private server checks identity, validates permissions, and queries live Odoo data via secure XML-RPC.</p>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div style="width:52px; height:52px; border-radius:50%; background-color:#0057FF; color:#ffffff; font-size:20px; font-weight:800; line-height:52px; text-align:center; margin:0 auto 18px auto;">3</div>
+        <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Real Answer in Seconds</h3>
+        <p style="font-size:13px; color:#6B7280; margin:0;">A clean, accurate, complete answer is returned &mdash; pulled from your live Odoo data, not a cached copy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 57 TOOLS ==================== -->
+<section style="background-color:#ffffff; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">57 Pre-Built Tools</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">Business Intelligence Across 5 Departments</h2>
+        <p style="color:#4B5563; margin-bottom:36px;">Real questions. Real answers. Every tool is ready to use the moment you install.</p>
+      </div>
+    </div>
+
+    <!-- Sales -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <div style="border:1px solid #E5E7EB; border-left:4px solid #3B82F6; border-radius:12px; padding:22px 24px;">
+          <div class="row align-items-start">
+            <div class="col-md-2 col-sm-3 col-4 mb-3">
+              <div style="font-size:26px; margin-bottom:6px;">&#128200;</div>
+              <div style="font-weight:800; font-size:15px; color:#111827; margin-bottom:6px;">Sales</div>
+              <span style="background-color:#EFF6FF; color:#3B82F6; font-size:11px; font-weight:700; padding:3px 10px; border-radius:100px;">10 Tools</span>
+            </div>
+            <div class="col-md-10 col-sm-9 col-8">
+              <div style="background-color:#F8FAFF; border-left:3px solid #3B82F6; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;What were our total sales last month?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #3B82F6; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Who are our top 5 customers by revenue?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #3B82F6; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Which salesperson is performing best this quarter?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #3B82F6; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827;">&ldquo;Show me all open quotations above &#8377;1 lakh&rdquo;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRM -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <div style="border:1px solid #E5E7EB; border-left:4px solid #22C55E; border-radius:12px; padding:22px 24px;">
+          <div class="row align-items-start">
+            <div class="col-md-2 col-sm-3 col-4 mb-3">
+              <div style="font-size:26px; margin-bottom:6px;">&#127919;</div>
+              <div style="font-weight:800; font-size:15px; color:#111827; margin-bottom:6px;">CRM</div>
+              <span style="background-color:#F0FDF4; color:#22C55E; font-size:11px; font-weight:700; padding:3px 10px; border-radius:100px;">8 Tools</span>
+            </div>
+            <div class="col-md-10 col-sm-9 col-8">
+              <div style="background-color:#F8FAFF; border-left:3px solid #22C55E; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;How many deals are in our pipeline right now?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #22C55E; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Which leads did we lose last month and why?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #22C55E; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Which lead source brings us the highest revenue?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #22C55E; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827;">&ldquo;What activities are overdue across the team?&rdquo;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventory -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <div style="border:1px solid #E5E7EB; border-left:4px solid #F97316; border-radius:12px; padding:22px 24px;">
+          <div class="row align-items-start">
+            <div class="col-md-2 col-sm-3 col-4 mb-3">
+              <div style="font-size:26px; margin-bottom:6px;">&#128230;</div>
+              <div style="font-weight:800; font-size:15px; color:#111827; margin-bottom:6px;">Inventory</div>
+              <span style="background-color:#FFF7ED; color:#F97316; font-size:11px; font-weight:700; padding:3px 10px; border-radius:100px;">14 Tools</span>
+            </div>
+            <div class="col-md-10 col-sm-9 col-8">
+              <div style="background-color:#F8FAFF; border-left:3px solid #F97316; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Which products are running below safety stock?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #F97316; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;What stock do we have across all warehouses?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #F97316; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Show me all incoming shipments expected this week&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #F97316; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827;">&ldquo;Which products haven&apos;t moved in 90 days?&rdquo;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purchase -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <div style="border:1px solid #E5E7EB; border-left:4px solid #A855F7; border-radius:12px; padding:22px 24px;">
+          <div class="row align-items-start">
+            <div class="col-md-2 col-sm-3 col-4 mb-3">
+              <div style="font-size:26px; margin-bottom:6px;">&#128666;</div>
+              <div style="font-weight:800; font-size:15px; color:#111827; margin-bottom:6px;">Purchase</div>
+              <span style="background-color:#FDF4FF; color:#A855F7; font-size:11px; font-weight:700; padding:3px 10px; border-radius:100px;">8 Tools</span>
+            </div>
+            <div class="col-md-10 col-sm-9 col-8">
+              <div style="background-color:#F8FAFF; border-left:3px solid #A855F7; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Which vendors are consistently delivering late?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #A855F7; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Who are our top vendors by purchase value?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #A855F7; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Compare prices for a product across all suppliers&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #A855F7; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827;">&ldquo;Show me all open RFQs pending approval&rdquo;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finance -->
+    <div class="row mb-0">
+      <div class="col-12">
+        <div style="border:1px solid #E5E7EB; border-left:4px solid #10B981; border-radius:12px; padding:22px 24px;">
+          <div class="row align-items-start">
+            <div class="col-md-2 col-sm-3 col-4 mb-3">
+              <div style="font-size:26px; margin-bottom:6px;">&#8377;</div>
+              <div style="font-weight:800; font-size:15px; color:#111827; margin-bottom:6px;">Finance &amp; Accounting</div>
+              <span style="background-color:#ECFDF5; color:#10B981; font-size:11px; font-weight:700; padding:3px 10px; border-radius:100px;">16 Tools</span>
+            </div>
+            <div class="col-md-10 col-sm-9 col-8">
+              <div style="background-color:#F8FAFF; border-left:3px solid #10B981; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;What is our profit and loss for this quarter?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #10B981; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Which customers have overdue invoices right now?&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #10B981; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827; margin-bottom:6px;">&ldquo;Show me the aged receivables summary&rdquo;</div>
+              <div style="background-color:#F8FAFF; border-left:3px solid #10B981; border-radius:6px; padding:8px 12px; font-size:13px; font-family:monospace; color:#111827;">&ldquo;How much GST have we collected versus reclaimable?&rdquo;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== SCREENSHOTS ==================== -->
+<section style="background-color:#F8FAFF; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">Inside the Module</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">A Clean Admin Interface &mdash; Built Into Odoo</h2>
+        <p style="color:#4B5563; margin-bottom:44px;">Everything is managed from inside Odoo. Admins never need to touch any code.</p>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6 col-12 mb-4">
+        <p style="font-size:13px; font-weight:600; color:#6B7280; margin-bottom:8px;">1 &middot; Settings &mdash; MCP Server Configuration</p>
+        <img src="config_page.png" alt="Configuration Page" style="width:100%; border-radius:10px; border:4px solid #E5E7EB;" />
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <p style="font-size:13px; font-weight:600; color:#6B7280; margin-bottom:8px;">2 &middot; User Management &mdash; List View</p>
+        <img src="manage_users_tab.png" alt="Manage Users Tab" style="width:100%; border-radius:10px; border:4px solid #E5E7EB;" />
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6 col-12 mb-4">
+        <p style="font-size:13px; font-weight:600; color:#6B7280; margin-bottom:8px;">3 &middot; Individual User &mdash; Permissions &amp; Tools</p>
+        <img src="manage_user.png" alt="Manage User Detail" style="width:100%; border-radius:10px; border:4px solid #E5E7EB;" />
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <p style="font-size:13px; font-weight:600; color:#6B7280; margin-bottom:8px;">4 &middot; Request Logs &mdash; Full Audit Trail</p>
+        <img src="logs_view.png" alt="Logs View" style="width:100%; border-radius:10px; border:4px solid #E5E7EB;" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-4">
+        <p style="font-size:13px; font-weight:600; color:#6B7280; margin-bottom:8px;">5 &middot; Employee View &mdash; My AI Access</p>
+        <img src="user's_module.png" alt="Employee Module View" style="width:100%; border-radius:10px; border:4px solid #E5E7EB;" />
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <p style="font-size:13px; font-weight:600; color:#6B7280; margin-bottom:8px;">6 &middot; Employee View &mdash; Connector URL &amp; Permissions</p>
+        <img src="user's_view_inside.png" alt="Employee View Inside" style="width:100%; border-radius:10px; border:4px solid #E5E7EB;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECURITY ==================== -->
+<section style="background-color:#ffffff; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">Security &amp; Privacy</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">Enterprise-Grade Security. Zero External Dependency.</h2>
+        <p style="color:#4B5563; margin-bottom:36px; max-width:620px;">Your business data stays on your infrastructure. Every access is validated, logged, and revocable.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100" style="background-color:#F8FAFF; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:22px;">
+            <div style="font-size:22px; margin-bottom:10px;">&#128273;</div>
+            <h3 style="font-size:14px; font-weight:700; color:#111827; margin-bottom:6px;">Personal Token Access</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Each employee receives a unique 43-character cryptographically secure token. No shared passwords. Revoke any user in one click.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100" style="background-color:#F8FAFF; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:22px;">
+            <div style="font-size:22px; margin-bottom:10px;">&#128737;</div>
+            <h3 style="font-size:14px; font-weight:700; color:#111827; margin-bottom:6px;">Permission-Controlled</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Admins choose exactly which departments each employee can access. Enforced at the server level on every single request.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100" style="background-color:#F8FAFF; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:22px;">
+            <div style="font-size:22px; margin-bottom:10px;">&#128203;</div>
+            <h3 style="font-size:14px; font-weight:700; color:#111827; margin-bottom:6px;">Full Audit Trail</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Every question is logged in Odoo &mdash; who asked, which tool, when, and the result. Nothing is hidden from administrators.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100" style="background-color:#F8FAFF; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:22px;">
+            <div style="font-size:22px; margin-bottom:10px;">&#127968;</div>
+            <h3 style="font-size:14px; font-weight:700; color:#111827; margin-bottom:6px;">Data Never Leaves</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">All data fetching happens within your own infrastructure. No Odoo data is sent to any external AI service or third-party cloud.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100" style="background-color:#F8FAFF; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:22px;">
+            <div style="font-size:22px; margin-bottom:10px;">&#128274;</div>
+            <h3 style="font-size:14px; font-weight:700; color:#111827; margin-bottom:6px;">Read-Only by Default</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Amogh AI is a read-only intelligence layer. Nothing in Odoo can be modified through AI queries &mdash; safe for all employee levels.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12 mb-4">
+        <div class="card h-100" style="background-color:#F8FAFF; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body" style="padding:22px;">
+            <div style="font-size:22px; margin-bottom:10px;">&#9201;</div>
+            <h3 style="font-size:14px; font-weight:700; color:#111827; margin-bottom:6px;">5-Min Revocation Cache</h3>
+            <p style="font-size:13px; color:#6B7280; margin:0;">Token validation is cached for performance. Deactivate a user with one click &mdash; access fully revoked within 5 minutes maximum.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ADMIN CONTROL PANEL ==================== -->
+<section style="background-color:#F8FAFF; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">Admin Control Panel</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">The Admin Controls Everything &mdash; From Inside Odoo.</h2>
+        <p style="color:#4B5563; margin-bottom:36px;">A familiar Odoo interface. No code. No configuration files.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px;">
+          <div class="card-body d-flex align-items-start" style="padding:18px;">
+            <div class="text-center" style="width:36px; min-width:36px; height:36px; border-radius:8px; background-color:#EBF1FF; line-height:36px; margin-right:14px; font-size:16px;">&#128100;</div>
+            <div>
+              <strong style="font-size:14px; color:#111827; display:block; margin-bottom:4px;">Add &amp; Onboard Employees</strong>
+              <p style="margin:0; font-size:13px; color:#6B7280;">Generate any employee&apos;s personal AI access URL in under 2 minutes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px;">
+          <div class="card-body d-flex align-items-start" style="padding:18px;">
+            <div class="text-center" style="width:36px; min-width:36px; height:36px; border-radius:8px; background-color:#EBF1FF; line-height:36px; margin-right:14px; font-size:16px;">&#9745;</div>
+            <div>
+              <strong style="font-size:14px; color:#111827; display:block; margin-bottom:4px;">Set Module Permissions</strong>
+              <p style="margin:0; font-size:13px; color:#6B7280;">Simple checkboxes for each of the 5 departments. Fine-grained tool-level control per user.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px;">
+          <div class="card-body d-flex align-items-start" style="padding:18px;">
+            <div class="text-center" style="width:36px; min-width:36px; height:36px; border-radius:8px; background-color:#EBF1FF; line-height:36px; margin-right:14px; font-size:16px;">&#9940;</div>
+            <div>
+              <strong style="font-size:14px; color:#111827; display:block; margin-bottom:4px;">Instant Deactivation</strong>
+              <p style="margin:0; font-size:13px; color:#6B7280;">One click deactivates any user. Token stops working within minutes &mdash; no other action needed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-3">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px;">
+          <div class="card-body d-flex align-items-start" style="padding:18px;">
+            <div class="text-center" style="width:36px; min-width:36px; height:36px; border-radius:8px; background-color:#EBF1FF; line-height:36px; margin-right:14px; font-size:16px;">&#128209;</div>
+            <div>
+              <strong style="font-size:14px; color:#111827; display:block; margin-bottom:4px;">Full Request Log</strong>
+              <p style="margin:0; font-size:13px; color:#6B7280;">Who asked what, which tool was used, when, and whether it succeeded &mdash; all in Odoo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== EMPLOYEE EXPERIENCE ==================== -->
+<section style="background-color:#ffffff; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">Employee Experience</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">Three Steps. Then Ask Anything Forever.</h2>
+        <p style="color:#4B5563; margin-bottom:36px;">If you can send a WhatsApp message, you can use Amogh AI.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-12 mb-4 text-center">
+        <div style="width:48px; height:48px; border-radius:50%; background-color:#0057FF; color:#ffffff; font-size:20px; font-weight:800; line-height:48px; text-align:center; margin:0 auto 16px auto;">1</div>
+        <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Receive Your Link</h3>
+        <p style="font-size:13px; color:#6B7280; margin:0;">Admin sends your personal access link via WhatsApp or email, or you can access it from the module in Odoo. Looks like a regular web URL.</p>
+      </div>
+      <div class="col-md-4 col-12 mb-4 text-center">
+        <div style="width:48px; height:48px; border-radius:50%; background-color:#0057FF; color:#ffffff; font-size:20px; font-weight:800; line-height:48px; text-align:center; margin:0 auto 16px auto;">2</div>
+        <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Paste It Once</h3>
+        <p style="font-size:13px; color:#6B7280; margin:0;">Paste into your AI tool&apos;s Settings &rarr; Integrations. Takes 2 minutes. Never needs to be repeated.</p>
+      </div>
+      <div class="col-md-4 col-12 mb-4 text-center">
+        <div style="width:48px; height:48px; border-radius:50%; background-color:#0057FF; color:#ffffff; font-size:20px; font-weight:800; line-height:48px; text-align:center; margin:0 auto 16px auto;">3</div>
+        <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:8px;">Ask Anything</h3>
+        <p style="font-size:13px; color:#6B7280; margin:0;">Open your AI tool. Type any business question. Get the real live answer from Odoo instantly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WHAT YOU GET ==================== -->
+<section style="background-color:#F8FAFF; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">What You Receive</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">Buy Once. Own Forever. No Subscriptions.</h2>
+        <p style="color:#4B5563; margin-bottom:36px;">Four complete deliverables in one purchase. The system is entirely yours after delivery.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-4">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body d-flex align-items-start" style="padding:24px;">
+            <div class="text-center" style="width:40px; min-width:40px; height:40px; border-radius:10px; background-color:#0057FF; color:#ffffff; font-weight:800; font-size:16px; line-height:40px; margin-right:16px;">1</div>
+            <div>
+              <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:6px;">Complete Odoo Module</h3>
+              <p style="font-size:13px; color:#6B7280; margin:0;">Full source code, installable from the Odoo App Store. Manages users, tokens, permissions, and audit logs. Compatible with Odoo 19.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body d-flex align-items-start" style="padding:24px;">
+            <div class="text-center" style="width:40px; min-width:40px; height:40px; border-radius:10px; background-color:#0057FF; color:#ffffff; font-weight:800; font-size:16px; line-height:40px; margin-right:16px;">2</div>
+            <div>
+              <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:6px;">Complete MCP Server Code</h3>
+              <p style="font-size:13px; color:#6B7280; margin:0;">A Python application that runs on your own server or VPS. Handles all 57 tools, validates requests, checks permissions, and logs to Odoo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body d-flex align-items-start" style="padding:24px;">
+            <div class="text-center" style="width:40px; min-width:40px; height:40px; border-radius:10px; background-color:#0057FF; color:#ffffff; font-weight:800; font-size:16px; line-height:40px; margin-right:16px;">3</div>
+            <div>
+              <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:6px;">Full Setup Video Guide</h3>
+              <p style="font-size:13px; color:#6B7280; margin:0;">Step-by-step video covering server deployment, Odoo module installation, and getting your first employee connected.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <div class="card h-100" style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:12px;">
+          <div class="card-body d-flex align-items-start" style="padding:24px;">
+            <div class="text-center" style="width:40px; min-width:40px; height:40px; border-radius:10px; background-color:#0057FF; color:#ffffff; font-weight:800; font-size:16px; line-height:40px; margin-right:16px;">4</div>
+            <div>
+              <h3 style="font-size:15px; font-weight:700; color:#111827; margin-bottom:6px;">Live Installation Support</h3>
+              <p style="font-size:13px; color:#6B7280; margin:0;">A live session with your team to walk through setup and confirm everything is working before handover.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOSTING ==================== -->
+<section style="background-color:#ffffff; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">Hosting Options</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:10px;">Run It Where You Want</h2>
+        <p style="color:#4B5563; margin-bottom:36px;">The setup guide covers both options in full detail.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-12 mb-4">
+        <div style="border:2px solid #E5E7EB; border-radius:12px; padding:30px; height:100%;">
+          <span style="background-color:#00C9A7; color:#ffffff; font-size:11px; font-weight:700; padding:4px 12px; border-radius:100px; display:inline-block; margin-bottom:14px;">Option A</span>
+          <h3 style="font-size:16px; font-weight:700; color:#111827; margin-bottom:10px;">Office Computer or Existing Server</h3>
+          <p style="font-size:13px; color:#6B7280; margin-bottom:12px;">Run on any office computer using Ngrok or Cloudflare Tunnel (both free) to make it reachable. Zero additional cost.</p>
+          <p style="font-size:13px; color:#6B7280; margin:0;">
+            &rarr; Zero additional cost<br/>
+            &rarr; Works for teams of any size<br/>
+            &rarr; No new infrastructure needed
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 mb-4">
+        <div style="border:2px solid #0057FF; border-radius:12px; padding:30px; background-color:#EBF1FF; height:100%;">
+          <span style="background-color:#0057FF; color:#ffffff; font-size:11px; font-weight:700; padding:4px 12px; border-radius:100px; display:inline-block; margin-bottom:14px;">Option B &mdash; Recommended</span>
+          <h3 style="font-size:16px; font-weight:700; color:#111827; margin-bottom:10px;">Cloud VPS</h3>
+          <p style="font-size:13px; color:#4B5563; margin-bottom:12px;">Any cloud provider (DigitalOcean, Hostinger, AWS) from roughly &#8377;800&ndash;1,500/month. Always-on, ideal for larger teams.</p>
+          <p style="font-size:13px; color:#4B5563; margin:0;">
+            &rarr; Proper domain name<br/>
+            &rarr; Always-on, faster performance<br/>
+            &rarr; Ideal for teams of 10+
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPATIBILITY ==================== -->
+<section style="background-color:#F8FAFF; padding:60px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#0057FF; margin-bottom:8px;">Compatibility</p>
+        <h2 style="font-size:26px; font-weight:800; color:#111827; margin-bottom:36px;">Works With What You Already Use</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-12 mb-3">
+        <div style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px; padding:18px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#0057FF; margin-bottom:6px;">Odoo Version</div>
+          <div style="font-weight:700; font-size:14px; color:#111827;">Odoo 19 (Community &amp; Enterprise)</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12 mb-3">
+        <div style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px; padding:18px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#0057FF; margin-bottom:6px;">AI Tool Requirement</div>
+          <div style="font-weight:700; font-size:14px; color:#111827;">Any MCP-compatible AI tool</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12 mb-3">
+        <div style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px; padding:18px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#0057FF; margin-bottom:6px;">Server Requirements</div>
+          <div style="font-weight:700; font-size:14px; color:#111827;">Python 3.10+, Linux or Windows</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12 mb-3">
+        <div style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px; padding:18px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#0057FF; margin-bottom:6px;">Modules Covered</div>
+          <div style="font-weight:700; font-size:14px; color:#111827;">Sales, CRM, Inventory, Purchase, Accounting</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12 mb-3">
+        <div style="background-color:#ffffff; border:1px solid #E5E7EB; border-radius:10px; padding:18px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#0057FF; margin-bottom:6px;">External Dependencies</div>
+          <div style="font-weight:700; font-size:14px; color:#111827;">None &mdash; uses your existing Odoo only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<section style="background-color:#111827; padding:40px 0;">
+  <div class="container text-center">
+    <img src="amogh_logo.png" alt="Amogh AI" style="height:56px; width:auto; margin-bottom:14px; opacity:0.95;" />
+    <p style="color:#ffffff; font-weight:700; font-size:15px; margin-bottom:4px;">Amogh AI &mdash; Natural Language Assistant for Odoo</p>
+    <p style="color:#9CA3AF; font-size:13px; margin-bottom:4px;">&#2309;&#2350;&#2379;&#2328; &mdash; Unerring, Unfailing, Infallible</p>
+    <p style="color:#9CA3AF; font-size:13px; margin-bottom:20px;">Compatible with Odoo 19 (Community &amp; Enterprise)</p>
+    <div class="d-inline-flex align-items-center" style="background-color:#1f2937; border:1px solid #374151; border-radius:8px; padding:10px 20px;">
+      <img src="odoo_logo.webp" alt="Odoo" style="height:20px; width:auto; margin-right:10px; filter:brightness(0) invert(1); opacity:0.85;" />
+      <span style="color:#D1D5DB; font-size:13px;">Available on the Odoo App Store</span>
+    </div>
+  </div>
+</section>
     <!-- Stats row -->
     <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin-top:40px;background:#ffffff;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;max-width:780px;margin-left:auto;margin-right:auto;box-shadow: #714B67FF 0px 0px 15px">
       <div style="flex:1;min-width:160px;padding:24px 20px;text-align:center;border-right:1px solid #E5E7EB;">
